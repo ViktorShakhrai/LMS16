@@ -30,6 +30,7 @@ from functools import wraps
 
 
 class TypeDecorator:
+
     @staticmethod
     def to_int(func):
         @wraps(func)
@@ -42,10 +43,45 @@ class TypeDecorator:
 
         return wrapper
 
+    @staticmethod
+    def to_str(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            rez = func(*args,**kwargs)
+            try:
+                return str(rez)
+            except ValueError:
+                print("Value str")
+        return wrapper
+
+    @staticmethod
+    def to_bool(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            rez = func(*args, **kwargs)
+            try:
+                return bool(rez)
+            except ValueError:
+                print("Value str")
+
+        return wrapper
+
+    @staticmethod
+    def to_float(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            rez = func(*args, **kwargs)
+            try:
+                return float(rez)
+            except ValueError:
+                print("Value str")
+
+        return wrapper
 
 @TypeDecorator.to_int
 def f():
-    return "5"
+    return 4.568769
+
 
 s = f()
 print(s)
